@@ -1,10 +1,61 @@
 pipeline {
     agent any
+    
+    environment {
+        VENV_DIR = ".venv"
+    }
+    
     stages {
-     stage('Hello') {
-                steps {
-                    echo 'Hello world'
+        stage('Virtual Environment Installation') {
+            steps {
+                script {
+                    if (!fileExists(env.VENV_DIR)) {
+                        sh 'python3 -m venv .venv'
+                    }
                 }
             }
-     }
+        }
+        
+        stage('Dependencies Installation') {
+            steps {
+                sh '''
+                    source .venv/bin/activate
+                    pip install --quiet -r requirements.txt
+                '''
+            }
+        }
+        
+        stage('Data Creation') {
+            steps {
+                sh '.venv/bin/python3 data_creation.py'
+            }
+        }
+        
+        stage('Data Preprocessing') {
+            steps {
+                sh '.venv/bin/python3 data_preprocessing.py'
+            }
+        }
+        
+        stage('Model Preparation') {
+            steps {
+                sh '.venv/bin/python3 model_preparation.py'
+            }
+        }
+        
+        stage('Model Testing') {
+            steps {
+                sh '.venv/bin/python3 model_testing.py'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
 }
