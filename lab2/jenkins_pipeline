@@ -7,7 +7,7 @@ pipeline {
         LAB_DIR = "lab1"
     }
 
-
+    stages {
         stage("Set up Virtual Environment") {
             steps {
                 script {
@@ -68,7 +68,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage("Test Model") {
             steps {
                 script {
