@@ -4,7 +4,7 @@ pipeline {
     environment {
         VENV_DIR = ".venv"
         VENV_ACTIVATE = ".venv/bin/activate"
-        LAB_DIR = "lab1"
+        LAB_DIR = "lab2"
     }
 
     stages {
@@ -39,7 +39,7 @@ pipeline {
                     echo "Running data_creation.py..."
                     sh """
                     . ${VENV_ACTIVATE}
-                    .venv/bin/python3 ${LAB_DIR}/data_creation.py
+                    python3 ${LAB_DIR}/data_creation.py
                     """
                 }
             }
@@ -51,7 +51,7 @@ pipeline {
                     echo "Running data_preprocessing.py..."
                     sh """
                     . ${VENV_ACTIVATE}
-                    .venv/bin/python3 ${LAB_DIR}/data_preprocessing.py
+                    python3 ${LAB_DIR}/data_preprocessing.py
                     """
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
                     echo "Running model_preparation.py..."
                     sh """
                     . ${VENV_ACTIVATE}
-                    .venv/bin/python3 ${LAB_DIR}/model_preparation.py
+                    python3 ${LAB_DIR}/model_preparation.py
                     """
                 }
             }
@@ -75,7 +75,7 @@ pipeline {
                     echo "Running model_testing.py..."
                     sh """
                     . ${VENV_ACTIVATE}
-                    .venv/bin/python3 ${LAB_DIR}/model_testing.py
+                    python3 ${LAB_DIR}/model_testing.py
                     """
                 }
             }
