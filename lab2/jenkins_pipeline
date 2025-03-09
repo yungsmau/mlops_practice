@@ -1,10 +1,94 @@
 pipeline {
     agent any
+
+    environment {
+        VENV_DIR = ".venv"
+        VENV_ACTIVATE = ".venv/bin/activate"
+        LAB_DIR = "lab2"
+    }
+
     stages {
-     stage('Hello') {
-                steps {
-                    echo 'Hello world'
+        stage("Set up Virtual Environment") {
+            steps {
+                script {
+                    if (!fileExists(env.VENV_DIR)) {
+                        echo "Creating virtual environment..."
+                        sh "python3 -m venv .venv"
+                    } else {
+                        echo "Virtual environment already exists."
+                    }
                 }
             }
-     }
+        }
+
+        stage("Install Dependencies") {
+            steps {
+                script {
+                    echo "Installing dependencies..."
+                    sh """
+                    . ${VENV_ACTIVATE}
+                    pip install -r ${LAB_DIR}/requirements.txt
+                    """
+                }
+            }
+        }
+
+        stage("Create Data") {
+            steps {
+                script {
+                    echo "Running data_creation.py..."
+                    sh """
+                    . ${VENV_ACTIVATE}
+                    python3 ${LAB_DIR}/data_creation.py
+                    """
+                }
+            }
+        }
+
+        stage("Process Data") {
+            steps {
+                script {
+                    echo "Running data_preprocessing.py..."
+                    sh """
+                    . ${VENV_ACTIVATE}
+                    python3 ${LAB_DIR}/data_preprocessing.py
+                    """
+                }
+            }
+        }
+
+        stage("Train Model") {
+            steps {
+                script {
+                    echo "Running model_preparation.py..."
+                    sh """
+                    . ${VENV_ACTIVATE}
+                    python3 ${LAB_DIR}/model_preparation.py
+                    """
+                }
+            }
+        }
+
+        stage("Test Model") {
+            steps {
+                script {
+                    echo "Running model_testing.py..."
+                    sh """
+                    . ${VENV_ACTIVATE}
+                    python3 ${LAB_DIR}/model_testing.py
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully."
+        }
+        failure {
+            echo "Pipeline failed!"
+        }
+    }
 }
+
