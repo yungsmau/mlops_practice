@@ -1,0 +1,8 @@
+services:
+  sentiment-api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: sentiment-api
+    ports:
+      - "8000:8000"
