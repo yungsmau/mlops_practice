@@ -1,6 +1,6 @@
 # Sentiment Analysis API
 
-FastAPI-приложение для анализа тональности текста на русском языке, использующее модель `blanchefort/rubert-base-cased-sentiment` из Hugging Face Transformers.
+FastAPI-приложение для анализа тональности текста, использующее модель `blanchefort/rubert-base-cased-sentiment` из Hugging Face Transformers.
 
 ---
 
