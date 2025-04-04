@@ -1,0 +1,5 @@
+outs:
+- md5: cdb1f7b252c663d8121657410d335478
+  size: 11462
+  hash: md5
+  path: titanc_csa.csv
