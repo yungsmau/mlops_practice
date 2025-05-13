@@ -1,0 +1,2 @@
+Ссылка на отдельный репозиторий для mlops_final:
+https://github.com/yungsmau/mlops_final
